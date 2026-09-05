@@ -18,6 +18,11 @@
   when a coder is done debugging, they start refactoring.
 
   The simulation stops when a coder burns out due to lack of compiling.
+
+  ## Important concepts to understand before starting the project
+    -  concurrent programming : managing multiple tasks at once. on a single core CPU the processor will quickly switch between tasks. tasks are in execution during the same time period but only one is actively executed at any given instant.
+ 
+    -  parallelism : is executing multiple tasks at the exact same time. this is only possible with a multiple core CPU.
 # Instruction 
 
 # Resources
