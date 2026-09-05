@@ -8,8 +8,7 @@
 - while debugging, they are not compiling nor refactoring;
 - and, of course, while refactoring, they are not compiling nor debugging.
 
-   there are as many dongles (forks) as coders. a coder needs their left and right dongles to compile.
-
+  there are as many dongles (forks) as coders. a coder needs their left and right dongles to compile.
   when a coder is done compiling they put both dongles back and starting debugging. 
 
   when a coder is done debugging, they start refactoring.
