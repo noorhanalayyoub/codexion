@@ -1,4 +1,4 @@
-* This activity has been created as part of the 42 curriculum by nalayyou *
+*This activity has been created as part of the 42 curriculum by nalayyou*
 
 # Description
   this activity is a simulation of the [dining philosophers](https://en.wikipedia.org/wiki/Dining_philosophers_problem) with some changes to it. 
