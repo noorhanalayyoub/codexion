@@ -3,6 +3,10 @@
 # Description
   this activity is a simulation of the [dining philosophers](https://en.wikipedia.org/wiki/Dining_philosophers_problem) with some changes to it. 
 
+  Visual Representation 
+
+  ![alt_text](./images/philosophers.jpg)
+  
   coders (representing philosophers) alternatively compile, debug, or refactor.
 - While compiling, they are not debugging nor refactoring;
 - while debugging, they are not compiling nor refactoring;
