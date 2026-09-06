@@ -26,5 +26,8 @@
 # Instructions
 
 # Resources
-- https://dev.to/yel-bakk/codexion-4fk8 
-- https://github.com/DeRuina/philosophers/tree/main/src
+- [article about the project](https://dev.to/yel-bakk/codexion-4fk8) 
+- [github repo for the project](https://github.com/ahmad-nashwan/Philosophers)
+- [another github repo for the project](https://github.com/DeRuina/philosophers/tree/main/src)
+- [difference between concurrent and parallel programming](https://www.geeksforgeeks.org/operating-systems/difference-between-concurrency-and-parallelism/)
+- [threads and why theyre needed] (https://www.codequoi.com/en/threads-mutexes-and-concurrent-programming-in-c/)
