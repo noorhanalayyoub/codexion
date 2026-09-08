@@ -33,8 +33,24 @@
     - race condition : it occurs when two or more processes or threads try to access and/or modify data at the same time. the result is determined by which one was milliseconds faster.
  
     - user level threads vs kernel level threads : in short user level threads (green threads) are managed by your language and cant take advantage of parallelism [https://stackoverflow.com/questions/15983872/difference-between-user-level-and-kernel-supported-threads](for more info)
- 
-    - 
+
+  ## getting started with pthread library
+    - creating a thread
+      ```
+      pthread_create( address of empty pthread_t variable, struct for attributes of thread, function that the thread will run, one piece of data that you want to pass to previous said function)
+      example
+      pthread_t t;
+      pthread_create(&t, NULL, say_hello, NULL);
+      ```
+    - waiting for a thread to finish
+      ```
+      pthread_join(t, NULL);
+      ```
+    - terminating the calling thread explicitly
+      ```
+      pthread_exit(NULL);
+      ```
+      
 # Instructions
 
 # Resources
