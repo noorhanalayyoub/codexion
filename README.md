@@ -27,9 +27,14 @@
     - process vs thread : a process consists of one or more threads. a process is a management concept , resources are allocated to a process and not a thread. all threads belonging to the same process get access to the same resources.
     
     - mutex : stands for mutually exclusive flag/object which is self explanatory. a flag is mutual between threads but is exclusive to one at a time.
+    
     - lockout freedom : a concept linked to mutex, it guarantees that every thread that wishes to enter the critical section will do so eventually. no process remains in critical section permanently.
  
     - race condition : it occurs when two or more processes or threads try to access and/or modify data at the same time. the result is determined by which one was milliseconds faster.
+ 
+    - user level threads vs kernel level threads : in short user level threads (green threads) are managed by your language and cant take advantage of parallelism [https://stackoverflow.com/questions/15983872/difference-between-user-level-and-kernel-supported-threads](for more info)
+ 
+    - 
 # Instructions
 
 # Resources
@@ -42,3 +47,4 @@
 - [process vs thread](https://www.reddit.com/r/explainlikeimfive/comments/k1ig1e/eli5_the_difference_between_a_process_and_a_thread/)
 - [process vs thread more in depth](https://algomaster.io/learn/concurrency-interview/processes-vs-threads)
 - [what is mutual exclusion](https://en.wikipedia.org/wiki/Mutual_exclusion)
+- man page
