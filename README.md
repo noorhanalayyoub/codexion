@@ -25,6 +25,11 @@
     -  parallelism : is executing multiple tasks at the exact same time. this is only possible with a multiple core CPU.
     
     - process vs thread : a process consists of one or more threads. a process is a management concept , resources are allocated to a process and not a thread. all threads belonging to the same process get access to the same resources.
+    
+    - mutex : stands for mutually exclusive flag/object which is self explanatory. a flag is mutual between threads but is exclusive to one at a time.
+    - lockout freedom : a concept linked to mutex, it guarantees that every thread that wishes to enter the critical section will do so eventually. no process remains in critical section permanently.
+ 
+    - race condition : it occurs when two or more processes or threads try to access and/or modify data at the same time. the result is determined by which one was milliseconds faster.
 # Instructions
 
 # Resources
@@ -36,3 +41,4 @@
 - [difference between fork and clone](https://stackoverflow.com/questions/4856255/the-difference-between-fork-vfork-exec-and-clone)
 - [process vs thread](https://www.reddit.com/r/explainlikeimfive/comments/k1ig1e/eli5_the_difference_between_a_process_and_a_thread/)
 - [process vs thread more in depth](https://algomaster.io/learn/concurrency-interview/processes-vs-threads)
+- [what is mutual exclusion](https://en.wikipedia.org/wiki/Mutual_exclusion)
