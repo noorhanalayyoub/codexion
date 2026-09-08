@@ -32,7 +32,7 @@
  
     - race condition : it occurs when two or more processes or threads try to access and/or modify data at the same time. the result is determined by which one was milliseconds faster.
  
-    - user level threads vs kernel level threads : in short user level threads (green threads) are managed by your language and cant take advantage of parallelism [https://stackoverflow.com/questions/15983872/difference-between-user-level-and-kernel-supported-threads](for more info)
+    - user level threads vs kernel level threads : in short user level threads (green threads) are managed by your language and cant take advantage of parallelism [for more info](https://stackoverflow.com/questions/15983872/difference-between-user-level-and-kernel-supported-threads))\
 
   ## getting started with pthread library
     - creating a thread
