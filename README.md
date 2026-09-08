@@ -23,6 +23,8 @@
     -  concurrent programming : managing multiple tasks at once. on a single core CPU the processor will quickly switch between tasks. tasks are in execution during the same time period but only one is actively executed at any given instant.
  
     -  parallelism : is executing multiple tasks at the exact same time. this is only possible with a multiple core CPU.
+    
+    - process vs thread : a process consists of one or more threads. a process is a management concept , resources are allocated to a process and not a thread. all threads belonging to the same process get access to the same resources.
 # Instructions
 
 # Resources
@@ -32,4 +34,5 @@
 - [difference between concurrent and parallel programming](https://www.geeksforgeeks.org/operating-systems/difference-between-concurrency-and-parallelism/)
 - [threads and why theyre needed](https://www.codequoi.com/en/threads-mutexes-and-concurrent-programming-in-c/)
 - [difference between fork and clone](https://stackoverflow.com/questions/4856255/the-difference-between-fork-vfork-exec-and-clone)
-- 
+- [process vs thread](https://www.reddit.com/r/explainlikeimfive/comments/k1ig1e/eli5_the_difference_between_a_process_and_a_thread/)
+- [process vs thread more in depth](https://algomaster.io/learn/concurrency-interview/processes-vs-threads)
