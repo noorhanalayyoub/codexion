@@ -56,7 +56,7 @@
 # Resources
 - [article about the project](https://dev.to/yel-bakk/codexion-4fk8) 
 - [github repo for the project](https://github.com/ahmad-nashwan/Philosophers)
-- [another github repo for the project](https://github.com/DeRuina/philosophers/tree/main/src)
+- [another github repo for the project](https://github.com/DeRuina/philosophers)
 - [difference between concurrent and parallel programming](https://www.geeksforgeeks.org/operating-systems/difference-between-concurrency-and-parallelism/)
 - [threads and why theyre needed](https://www.codequoi.com/en/threads-mutexes-and-concurrent-programming-in-c/)
 - [difference between fork and clone](https://stackoverflow.com/questions/4856255/the-difference-between-fork-vfork-exec-and-clone)
