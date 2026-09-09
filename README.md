@@ -63,4 +63,5 @@
 - [process vs thread](https://www.reddit.com/r/explainlikeimfive/comments/k1ig1e/eli5_the_difference_between_a_process_and_a_thread/)
 - [process vs thread more in depth](https://algomaster.io/learn/concurrency-interview/processes-vs-threads)
 - [what is mutual exclusion](https://en.wikipedia.org/wiki/Mutual_exclusion)
+- [codexion visualizer](https://codexion-visualizer.sacha-dev.me/)
 - man page
