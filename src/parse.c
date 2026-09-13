@@ -20,7 +20,7 @@ int	ft_atoi(const char *str)
 	{
 		if (str[index] == '-')
             return -1;
-            index++;
+        index++;
 	}
 	while (ft_isdigit(str[index]))
 	{
@@ -42,7 +42,7 @@ int parsing_args(char **args)
         c = args[i];
         while(c)
         {
-            if(!atoi(c) || atoi(c) <0){
+            if(ft_atoi(c)==-1){
                 printf("invalid number\n");
                 return 0;
             }

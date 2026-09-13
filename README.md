@@ -64,4 +64,5 @@
 - [process vs thread more in depth](https://algomaster.io/learn/concurrency-interview/processes-vs-threads)
 - [what is mutual exclusion](https://en.wikipedia.org/wiki/Mutual_exclusion)
 - [codexion visualizer](https://codexion-visualizer.sacha-dev.me/)
+- [gdb debugger tutorial](https://web.eecs.umich.edu/~sugih/pointers/summary.html)
 - man page
