@@ -19,8 +19,8 @@ int main (int argc, char **argv)
             printf("invalid scheduler\n");
             return 0;
         }
-    t_config a;        
-
+    t_config config;
+    init_config(argv, &config);
     }
         
 }

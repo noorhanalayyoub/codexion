@@ -19,8 +19,8 @@ int	ft_atoi(const char *str)
 	if (str[index] == '-' || str[index] == '+')
 	{
 		if (str[index] == '-')
-            return -1;
-        index++;
+			return (-1);
+		index++;
 	}
 	while (ft_isdigit(str[index]))
 	{
@@ -31,20 +31,21 @@ int	ft_atoi(const char *str)
 	return (answer);
 }
 
-int parsing_args(char **args)
+int	parsing_args(char **args)
 {
-    int i;
-    i = 1;
-    while(i < 8)
-    {
-        char *c;
-        c = args[i];
-        if(ft_atoi(c)==-1){
-            printf("invalid number\n");
-            return 0;
-        }
-        i++;
-    }
-    return 1;
-}
+	int	i;
+		char *c;
 
+	i = 1;
+	while (i < 8)
+	{
+		c = args[i];
+		if (ft_atoi(c) == -1)
+		{
+			printf("invalid number\n");
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
