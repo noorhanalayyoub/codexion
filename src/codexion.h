@@ -20,16 +20,18 @@ int time_to_refactor;
 int number_of_compiles_required;
 int dongle_cooldown;
 char *scheduler;
+int start_of_simulation;
 }t_config;
 
-struct s_coder{
-    char *state;
+typedef struct s_coder{
     int time_to_burnout;
-    int id;
+    int number;
     int compiles_left;
     int time_of_last_compile;
-};
+}t_coder;
 
 void init_config(char **args, t_config* config);
+int init_coder(t_coder *coder, int i, t_config* config);
+int init_threads(t_config *config);
 
 #endif
