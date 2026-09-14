@@ -54,6 +54,7 @@
 # Instructions
 
 # Resources
+- [threading playlist on youtube](https://www.youtube.com/playlist?list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2)
 - [article about the project](https://dev.to/yel-bakk/codexion-4fk8) 
 - [github repo for the project](https://github.com/ahmad-nashwan/Philosophers)
 - [another github repo for the project](https://github.com/DeRuina/philosophers)
