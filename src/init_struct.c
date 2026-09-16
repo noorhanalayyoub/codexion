@@ -22,32 +22,39 @@ void	init_config(char **args, t_config *config)
     config->start_of_simulation = get the time!!
 }
 
-int init_threads(t_config *config)
-{
-	pthread_t	*threads;
 
-	threads = malloc((config->number_of_coders)* sizeof(pthread_t));
-	i = 0;
-	while (i < config->number_of_coders)
-	{
-		if (pthread_create(threads + i, NULL, idk_yet(NULL), NULL))
-		{
-			printf("error creating a thread\n");
-			return (-1);
-		}
-	}
-}
-
-int init_coders(t_config* config)
+t_coder* init_coders(t_config* config)
 {   
     int i;
     i = 0; 
+
     t_coder *coders = malloc((config->number_of_coders)*sizeof(t_coder));
+    if(coders == NULL)
+        return (NULL);
     while(i < config->number_of_coders)
     {
     coders[i].time_to_burnout = config->time_to_burnout;
     coders[i].time_of_last_compile = start of simulation;
     coders[i].compiles_left = config->number_of_compiles_required;
-
+    //    coders[i].left = 
+    // coders[i].right = 
+    
     }
+    return (coders);
 } 
+
+t_dongle* init_dongles(t_config *config)
+{
+    int i;
+    t_dongle *dongles = malloc(sizeof(t_dongle)*config->number_of_coders);
+    if(dongles == NULL)
+        return (NULL);
+    while(i < config->number_of_coders)
+    {
+        pthread_mutex_init(&dongles[i].mutex, NULL);
+            // check if it fails `
+        dongles[i].state = 1;
+        dongles[i].cooldown = config->dongle_cooldown;
+    }
+    return dongles;
+}

@@ -7,10 +7,6 @@
 # include <string.h>
 # include <pthread.h>
 
-int parsing_args(char **args);
-int	ft_atoi(const char *str);
-int	ft_isdigit(int c);
-
 typedef enum r_value{
     SUCCESS,
     FAILURE
@@ -36,6 +32,7 @@ int start_of_simulation;
 typedef struct s_dongle{
     int state;
     int cooldown;
+    pthread_mutex_t mutex;
 }t_dongle;
 
 typedef struct s_coder{
@@ -48,8 +45,12 @@ typedef struct s_coder{
     t_dongle *right;
 }t_coder;
 
+int parsing_args(char **args);
+int	ft_atoi(const char *str);
+int	ft_isdigit(int c);
 void init_config(char **args, t_config* config);
-int init_coder(t_coder *coder, int i, t_config* config);
+t_coder* init_coders(t_config* config);
 int init_threads(t_config *config);
+t_dongle* init_dongles(t_config *config);
 
 #endif
