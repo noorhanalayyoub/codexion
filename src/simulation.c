@@ -1,4 +1,5 @@
 #include "codexion.h"
+// monitor routien for monitor thread
 int compile(t_coder *coder)
 {
     
@@ -12,8 +13,18 @@ int refactor(t_coder *coder)
 {
 }
 
-void* routine(void *coder)
-{
+void* routine(void *uncasted_coder)
+{   t_coder* coder;
+    coder = (t_coder*) uncasted_coder;
+    if (coder->config->number_of_coders == 1)
+    {
+        pthread_mutex_lock(&coder->left->mutex);
+        printf("dongle acquired\n");
+        printf("then you kys\n");
+        smart_sleep(, the time i want);
+
+            wait until burnout 
+    }
    compile(coder);
    debug(coder);
    refactor(coder);
@@ -22,6 +33,7 @@ int simulate(char **args)
 {   
     t_config config;
     int i;
+    pthread_t monitor_thread;
     init_config(args, &config);
     config.dongles = init_dongles(&config);
     config.coders = init_coders(&config, config.dongles);
@@ -32,6 +44,7 @@ int simulate(char **args)
     {
         if(pthread_create(&config.coders[i].thread,NULL, routine,&config.coders[i]))
             return (FAILURE);
+        pthread_create(&monitor_thread, NULL, monitor, &config);
         i++;
     }
     // errro handling 

@@ -20,6 +20,7 @@ void	init_config(char **args, t_config *config)
     else
         config->scheduler = EDF;
     config->start_of_simulation = get_time_ms();
+    config->state_of_sim = 1;
 }
 
 
