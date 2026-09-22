@@ -34,5 +34,6 @@ void	*monitor(void *uncasted_config)
             pthread_mutex_unlock(&config->simulation_mutex);
 			return (NULL);
 		}
-	}
+	sleep(1000);
+    }
 }
