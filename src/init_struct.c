@@ -6,7 +6,7 @@ void	*idk_yet(void *arg)
 	return (NULL);
 }
 
-void	init_config(char **args, t_config *config)
+void*	init_config(char **args, t_config *config)
 {
 	config->number_of_coders = ft_atoi(args[1]);
 	config->time_to_burnout = ft_atoi(args[2]);
@@ -21,6 +21,11 @@ void	init_config(char **args, t_config *config)
         config->scheduler = EDF;
     config->start_of_simulation = get_time_ms();
     config->state_of_sim = 1;
+if(pthread_mutex_init(&config->simulation_mutex, NULL))
+    { printf("simulation_mutex initialization failed\n");
+            return (NULL);
+    }
+return NULL;
 }
 
 

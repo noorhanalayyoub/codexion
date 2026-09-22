@@ -61,12 +61,13 @@ int start_of_simulation;
 t_dongle* dongles;
 t_coder* coders;
 int state_of_sim; // 1 for working 
+pthread_mutex_t simulation_mutex;
 }t_config;
 
 int parsing_args(char **args);
 int	ft_atoi(const char *str);
 int	ft_isdigit(int c);
-void init_config(char **args, t_config* config);
+void* init_config(char **args, t_config* config);
 t_coder* init_coders(t_config* config, t_dongle* dongles);
 int init_threads(t_config *config);
 t_dongle* init_dongles(t_config *config);
