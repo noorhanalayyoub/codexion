@@ -30,7 +30,7 @@ void	*monitor(void *uncasted_config)
 		if (all_compiled)
 		{
             pthread_mutex_lock(&config->simulation_mutex);
-			config->state_of_sim = 1;
+			config->state_of_sim = 0;
             pthread_mutex_unlock(&config->simulation_mutex);
 			return (NULL);
 		}
