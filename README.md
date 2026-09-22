@@ -67,4 +67,5 @@
 - [codexion visualizer](https://codexion-visualizer.sacha-dev.me/)
 - [gdb debugger tutorial](https://web.eecs.umich.edu/~sugih/pointers/summary.html)
 - [mutexes on microinstruction level](https://www.linkedin.com/pulse/hardware-behind-mutexes-risc-v-yusif-kazimli-90hhe)
+- [what are enums](https://www.w3schools.com/c/c_enums.php)
 - man page
