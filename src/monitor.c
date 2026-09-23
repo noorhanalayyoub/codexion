@@ -34,6 +34,6 @@ void	*monitor(void *uncasted_config)
             pthread_mutex_unlock(&config->simulation_mutex);
 			return (NULL);
 		}
-	sleep(1000);
+	usleep(1000); // changed this from sleeping 1000 seconds to 1ms 
     }
 }

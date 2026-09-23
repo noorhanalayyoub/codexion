@@ -10,7 +10,7 @@ int main (int argc, char **argv)
     else{
         int return_value;
         return_value=parsing_args(argv);
-        if (return_value == -1){
+        if (return_value == FAILURE){
             printf("invalid number\n");
             return 0;
         }
@@ -19,8 +19,7 @@ int main (int argc, char **argv)
             printf("invalid scheduler\n");
             return 0;
         }
-//    t_config config;
- //   init_config(argv, &config);
+        simulate(argv);
     }
         
 }

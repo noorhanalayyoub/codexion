@@ -2,15 +2,17 @@
 // monitor routien for monitor thread
 int compile(t_coder *coder)
 {
-    
+printf("compiling\n");    
 }
 
 int debug(t_coder *coder)
 {
+    printf("debugging\n");
 }
 
 int refactor(t_coder *coder)
 {
+    printf("refactoring\n");
 }
 
 void* routine(void *uncasted_coder)
@@ -42,9 +44,17 @@ int simulate(char **args)
     {
         if(pthread_create(&config.coders[i].thread,NULL, routine,&config.coders[i]))
             return (FAILURE);
-        pthread_create(&monitor_thread, NULL, monitor, &config);
         i++;
     }
+    pthread_create(&monitor_thread, NULL, monitor, &config); //this was isnide while loop    
+            i = 0;
+    while(i <config.number_of_coders)
+    {
+        if (pthread_join(config.coders[i].thread, NULL))
+            return (FAILURE);
+        i++;
+    }
+ 
     // errro handling 
     return (SUCCESS);
 }

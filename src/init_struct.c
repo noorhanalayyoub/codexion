@@ -44,6 +44,7 @@ t_coder* init_coders(t_config* config, t_dongle* dongles)
     coders[i].compiles_left = config->number_of_compiles_required;
     coders[i].left = &dongles[i];
     coders[i].right = &dongles[(i+1)%config->number_of_coders]; 
+    i++;
     }
     return (coders);
 } 

@@ -66,5 +66,6 @@ void ft_putstr_fd(char *message, int fd);
 long long get_time_ms(void);
 void smart_sleep(t_coder* coder, long long time_in_ms);
 void	*monitor(void *uncasted_config);
+int simulate(char **args);
 
 #endif
