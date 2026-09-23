@@ -13,7 +13,7 @@ int debug(t_coder *coder)
     printf("debugging\n");
     int result;
     smart_sleep(coder, coder->config->time_to_debug);
-    check_sim_state(coder);
+    result = check_sim_state(coder);
     if(result)
         return (SUCCESS);
     return (FAILURE);
@@ -24,7 +24,7 @@ int refactor(t_coder *coder)
     printf("refactoring\n");    
     int result;
     smart_sleep(coder, coder->config->time_to_debug);
-    check_sim_state(coder);
+    result = check_sim_state(coder);
     if(result)
         return (SUCCESS);
     return (FAILURE);
