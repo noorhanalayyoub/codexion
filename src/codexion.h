@@ -10,16 +10,6 @@
 
 typedef struct s_config t_config;
 
-long long    get_time_ms(void)
-{
-    long long        time;
-    struct timeval    tv;
-
-    gettimeofday(&tv, NULL);
-    time = tv.tv_sec * 1000LL + tv.tv_usec / 1000;
-    return (time);
-}
-
 typedef enum r_value{
     SUCCESS,
     FAILURE
@@ -71,5 +61,6 @@ void* init_config(char **args, t_config* config);
 t_coder* init_coders(t_config* config, t_dongle* dongles);
 int init_threads(t_config *config);
 t_dongle* init_dongles(t_config *config);
+void ft_putstr_fd(char *message, int fd);
 
 #endif

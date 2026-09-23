@@ -7,10 +7,28 @@ int	ft_isdigit(int c)
 	return (FAILURE);
 }
 
+static int	ft_isnumber(const char *s)
+{
+	int	i;
+
+	// guard against empty strings
+	if (!s || !s[0])
+		return (FAILURE);
+	i = 0;
+	while (s[i])
+	{
+		if (ft_isdigit(s[i]) == FAILURE)
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 int	ft_atoi(const char *str)
 {
 	int	answer;
 	int	index;
+	int	digit;
 
 	index = 0;
 	answer = 0;
@@ -22,10 +40,14 @@ int	ft_atoi(const char *str)
 			return (-1);
 		index++;
 	}
-	while (ft_isdigit(str[index]))
+	// CHANGE: ADD OVERFLOW CHECK
+	while (str[index])
 	{
+		digit = str[index] - '0';
+		if (answer > (INT_MAX - digit) / 10)
+			return (-1);
 		answer *= 10;
-		answer += (str[index]) - '0';
+		answer += digit;
 		index++;
 	}
 	return (answer);
@@ -33,18 +55,18 @@ int	ft_atoi(const char *str)
 
 int	parsing_args(char **args)
 {
-	int	i;
-		char *c;
+	int		i;
+	char	*c;
 
 	i = 1;
 	while (i < 8)
 	{
 		c = args[i];
-		if (ft_atoi(c) == -1)
-		{
-			printf("invalid number\n");
+		// CHANGE: removed redundent print statement and guard against empty input
+		if (ft_isnumber(c) == FAILURE)
 			return (FAILURE);
-		}
+		if (ft_atoi(c) == -1)
+			return (FAILURE);
 		i++;
 	}
 	return (SUCCESS);
