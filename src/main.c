@@ -14,7 +14,7 @@ int main (int argc, char **argv)
             printf("invalid number\n");
             return 0;
         }
-        if (!strcmp(argv[8],"fifo") && !strcmp(argv[8], "edf"))
+        if (strcmp(argv[8],"fifo") && strcmp(argv[8], "edf"))
         {
             printf("invalid scheduler\n");
             return 0;

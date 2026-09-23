@@ -1,6 +1,6 @@
 #include "codexion.h"
 
-int smart_sleep(t_coder* coder, long long time_in_ms)
+void smart_sleep(t_coder* coder, long long time_in_ms)
 {
     long long time_in_micro;
     time_in_micro = time_in_ms * 1000;

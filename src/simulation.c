@@ -21,9 +21,7 @@ void* routine(void *uncasted_coder)
         pthread_mutex_lock(&coder->left->mutex);
         printf("dongle acquired\n");
         printf("then you kys\n");
-        smart_sleep(, the time i want);
-
-            wait until burnout 
+        smart_sleep(coder,coder->time_to_burnout);
     }
    compile(coder);
    debug(coder);

@@ -7,6 +7,7 @@
 # include <string.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <limits.h>
 
 typedef struct s_config t_config;
 
@@ -63,5 +64,7 @@ int init_threads(t_config *config);
 t_dongle* init_dongles(t_config *config);
 void ft_putstr_fd(char *message, int fd);
 long long get_time_ms(void);
+void smart_sleep(t_coder* coder, long long time_in_ms);
+void	*monitor(void *uncasted_config);
 
 #endif
