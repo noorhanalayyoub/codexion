@@ -1,4 +1,5 @@
 #include "codexion.h"
+#include <pthread.h>
 // monitor routien for monitor thread
 int compile(t_coder *coder)
 {
@@ -10,12 +11,30 @@ return (SUCCESS);
 int debug(t_coder *coder)
 {
     printf("debugging\n");
+    long long started;
+    started = get_time_ms();
+    while(get_time_ms() - started < coder->config->time_to_debug)
+    {
+        pthread_mutex_lock(&coder->config->simulation_mutex);
+        if(!coder->config->state_of_sim)
+            return (FAILURE);
+        pthread_mutex_unlock(&coder->config->simulation_mutex);
+    }
     return (SUCCESS);
 }
 
 int refactor(t_coder *coder)
 {
     printf("refactoring\n");
+    long long started;
+    started = get_time_ms();
+    while(get_time_ms() - started < coder->config->time_to_refactor)
+    {
+        pthread_mutex_lock(&coder->config->simulation_mutex);
+        if(!coder->config->state_of_sim)
+            return (FAILURE);
+        pthread_mutex_unlock(&coder->config->simulation_mutex);
+    }
     return (SUCCESS);
 }
 

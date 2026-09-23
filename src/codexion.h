@@ -51,7 +51,7 @@ t_scheduler scheduler;
 int start_of_simulation;
 t_dongle* dongles;
 t_coder* coders;
-int state_of_sim; // 1 for working 
+long long state_of_sim; // 1 for working 
 pthread_mutex_t simulation_mutex;
 }t_config;
 
