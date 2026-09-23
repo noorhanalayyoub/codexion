@@ -3,16 +3,20 @@
 int compile(t_coder *coder)
 {
 printf("compiling\n");    
+return (SUCCESS);
 }
+
 
 int debug(t_coder *coder)
 {
     printf("debugging\n");
+    return (SUCCESS);
 }
 
 int refactor(t_coder *coder)
 {
     printf("refactoring\n");
+    return (SUCCESS);
 }
 
 void* routine(void *uncasted_coder)

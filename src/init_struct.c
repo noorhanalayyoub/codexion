@@ -39,6 +39,7 @@ t_coder* init_coders(t_config* config, t_dongle* dongles)
         return (NULL);
     while(i < config->number_of_coders)
     {
+    coders[i].config = config;
     coders[i].time_to_burnout = config->time_to_burnout;
     coders[i].time_of_last_compile = config->start_of_simulation;
     coders[i].compiles_left = config->number_of_compiles_required;
