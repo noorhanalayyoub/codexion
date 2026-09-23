@@ -11,16 +11,17 @@ return (SUCCESS);
 int debug(t_coder *coder)
 {
     printf("debugging\n");
-    long long started;
-    started = get_time_ms();
-    while(get_time_ms() - started < coder->config->time_to_debug)
-    {
-        pthread_mutex_lock(&coder->config->simulation_mutex);
-        if(!coder->config->state_of_sim)
-            return (FAILURE);
-        pthread_mutex_unlock(&coder->config->simulation_mutex);
-    }
-    return (SUCCESS);
+    int result;
+    smart_sleep(coder, coder->config->time_to_debug);
+    check_sim_state(coder);
+    if(result)
+        return (SUCCESS);
+    return (FAILURE);
+    // the issue with this version
+    // checking and sleeping arent parallel
+    // checking happens after sleeping is done 
+    // theres delay
+ 
 }
 
 int refactor(t_coder *coder)
@@ -31,8 +32,10 @@ int refactor(t_coder *coder)
     while(get_time_ms() - started < coder->config->time_to_refactor)
     {
         pthread_mutex_lock(&coder->config->simulation_mutex);
-        if(!coder->config->state_of_sim)
+        if(!coder->config->state_of_sim){
+        pthread_mutex_unlock(&coder->config->simulation_mutex);
             return (FAILURE);
+        }
         pthread_mutex_unlock(&coder->config->simulation_mutex);
     }
     return (SUCCESS);
