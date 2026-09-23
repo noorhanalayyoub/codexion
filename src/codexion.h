@@ -62,5 +62,6 @@ t_coder* init_coders(t_config* config, t_dongle* dongles);
 int init_threads(t_config *config);
 t_dongle* init_dongles(t_config *config);
 void ft_putstr_fd(char *message, int fd);
+long long get_time_ms(void);
 
 #endif
