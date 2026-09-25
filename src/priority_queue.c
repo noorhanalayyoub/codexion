@@ -40,8 +40,12 @@ void append_element(t_pq* priority_queue,t_coder* coder)
 // aooend to th end and move last pointer
 }
 
-int extract(t_node* pq)
+int extract(t_pq* priority_queue)
 {
+    int result;
+    result = priority_queue->head->value;
+    priority_queue->head = priority_queue->head->next;
+    return result;
 // remove the first element an dchnage head pointer 
 }
 
