@@ -69,4 +69,5 @@
 - [mutexes on microinstruction level](https://www.linkedin.com/pulse/hardware-behind-mutexes-risc-v-yusif-kazimli-90hhe)
 - [what are enums](https://www.w3schools.com/c/c_enums.php)
 - [heaps](https://dev.to/paulike/heap-sort-1j4h)
+- [priority queue](www.youtube.com/watch?v=yntfI_jqNms)
 - man page
