@@ -18,11 +18,11 @@ void init_node(t_node* node, t_coder* coder, int priority)
 }
 void append_element(t_pq* priority_queue,t_coder* coder)
 {
-    t_node* current_node;
+    t_node current_node; // create a node 
     int priority;
 
     priority = priority_queue->length;
-    init_node(current_node, coder, priority);
+    init_node(&current_node, coder, priority); // send this node by ref
  if(!priority_queue->length){
         priority_queue->length++;
         priority_queue->head = current_node;
