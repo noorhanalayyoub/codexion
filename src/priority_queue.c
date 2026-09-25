@@ -1,12 +1,44 @@
 #include "codexion.h"
-void init_pq(t_coder* coder)
-{
-    t_pq priority_queue;
-    priority_queue.head = NULL;
-}
-int append_element(t_coder* coder, t_node* pq)
-{
 
+void init_pq(t_pq* priority_queue)
+{
+   priority_queue->head = NULL;
+   priority_queue->last = NULL;
+   priority_queue->length = 0;
+}
+// i want to initialize the pq 
+// add the first element and work from there 
+// priority is determined by time of arrival (request for resource) 
+// i must add a value to priority idk how 
+void init_node(t_node* node, t_coder* coder, int priority)
+{
+    node->value = coder->number;
+    node->next = NULL;
+    node->priority = priority;
+}
+int append_element(t_pq* priority_queue,t_coder* coder)
+{
+    t_node* current_node;
+    int priority;
+
+    priority = priority_queue->length;
+    init_node(current_node, coder, priority);
+ if(!priority_queue->length){
+        priority_queue->length++;
+        priority_queue->head = current_node;
+        priority_queue->last = current_node; 
+ }
+ else 
+ {
+     priority_queue->length++;
+    
+ }
+// aooend to th end and move last pointer
+}
+
+int extract(t_node* pq)
+{
+// remove the first element an dchnage head pointer 
 }
 
 

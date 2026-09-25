@@ -14,12 +14,14 @@ typedef struct s_config t_config;
 typedef struct s_node{
     int priority;
     int value;
-    struct s_node* parent;
+    struct s_node* next;
 }t_node;
 
 typedef struct s_pq
 {
     t_node* head;
+    t_node* last;
+    int length;
 }t_pq;
 
 typedef enum r_value{
