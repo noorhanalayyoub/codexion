@@ -3,7 +3,8 @@
 // monitor routien for monitor thread
 int compile(t_coder *coder)
 {
-printf("compiling\n");    
+printf("compiling\n");
+
 return (SUCCESS);
 }
 
