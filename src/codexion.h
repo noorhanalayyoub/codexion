@@ -11,6 +11,17 @@
 
 typedef struct s_config t_config;
 
+typedef struct s_node{
+    int priority;
+    int value;
+    struct s_node* parent;
+}t_node;
+
+typedef struct s_pq
+{
+    t_node* head;
+}t_pq;
+
 typedef enum r_value{
     SUCCESS,
     FAILURE
