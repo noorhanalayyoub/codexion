@@ -16,7 +16,7 @@ void init_node(t_node* node, t_coder* coder, int priority)
     node->next = NULL;
     node->priority = priority;
 }
-int append_element(t_pq* priority_queue,t_coder* coder)
+void append_element(t_pq* priority_queue,t_coder* coder)
 {
     t_node* current_node;
     int priority;
@@ -30,6 +30,10 @@ int append_element(t_pq* priority_queue,t_coder* coder)
  }
  else 
  {
+     t_node* temp_node;
+     temp_node = priority_queue->last;
+     temp_node->next = current_node;
+     priority_queue->last = current_node;
      priority_queue->length++;
     
  }
