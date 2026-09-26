@@ -3,8 +3,8 @@
 
 // monitor routien for monitor thread
 int	compile(t_coder *coder)
-{
-	printf("compiling\n");
+{   
+    print_state(coder, "compile");
 	return (SUCCESS);
 }
 
@@ -12,8 +12,8 @@ int	debug(t_coder *coder)
 {
 	int	result;
 
-	printf("debugging\n");
-	smart_sleep(coder, coder->config->time_to_debug);
+    print_state(coder, "debug");
+    smart_sleep(coder, coder->config->time_to_debug);
 	result = check_sim_state(coder);
 	if (result)
 		return (SUCCESS);
@@ -23,8 +23,8 @@ int	debug(t_coder *coder)
 int	refactor(t_coder *coder)
 {
 	int	result;
-
-	printf("refactoring\n");
+    
+    print_state(coder, "refactor");
 	smart_sleep(coder, coder->config->time_to_refactor);
 	result = check_sim_state(coder);
 	if (result)
