@@ -27,14 +27,14 @@ void	append_element(t_pq *priority_queue, t_coder *coder)
 	if (!priority_queue->length)
 	{
 		priority_queue->length++;
-		priority_queue->head = current_node;
-		priority_queue->last = current_node;
+		priority_queue->head = &current_node;
+		priority_queue->last = &current_node;
 	}
 	else
 	{
 		temp_node = priority_queue->last;
-		temp_node->next = current_node;
-		priority_queue->last = current_node;
+		temp_node->next = &current_node;
+		priority_queue->last = &current_node;
 		priority_queue->length++;
 	}
 	// aooend to th end and move last pointer

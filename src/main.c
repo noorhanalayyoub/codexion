@@ -7,8 +7,7 @@ int	main(int argc, char **argv)
 	if (argc != 9)
 	{
 		printf("number of command line arguments must be exactly 8\n");
-		printf("usage:
-			/.codexion number_of_coders time_to_burnout time_to_compile time_to_debug time_to_refactor number_of_compiles_required dongle_cooldown scheduler");
+		printf("usage:/.codexion number_of_coders time_to_burnout time_to_compile time_to_debug time_to_refactor number_of_compiles_required dongle_cooldown scheduler");
 		return (0);
 	}
 	else
