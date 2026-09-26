@@ -1,11 +1,12 @@
 #include "codexion.h"
-// i am not sure where i should lock and unlock mutex lock 
+
+// i am not sure where i should lock and unlock mutex lock
 // when accessing compiles left and time to burnout
 void	*monitor(void *uncasted_config)
 {
 	t_config	*config;
 	int			all_compiled;
-	int         i;
+	int			i;
 
 	config = (t_config *)uncasted_config;
 	all_compiled = 1;
@@ -15,27 +16,27 @@ void	*monitor(void *uncasted_config)
 		all_compiled = 1;
 		while (i < config->number_of_coders)
 		{
-            pthread_mutex_lock(&config->simulation_mutex);
+			pthread_mutex_lock(&config->simulation_mutex);
 			if (config->time_to_burnout <= get_time_ms()
 				- config->coders[i].time_of_last_compile)
 			{
 				printf("coder %d burned out\n", i);
 				config->state_of_sim = 0;
-                pthread_mutex_unlock(&config->simulation_mutex);
+				pthread_mutex_unlock(&config->simulation_mutex);
 				return (NULL);
 			}
 			if (config->coders[i].compiles_left)
 				all_compiled = 0;
 			i++;
-           pthread_mutex_unlock(&config->simulation_mutex);
+			pthread_mutex_unlock(&config->simulation_mutex);
 		}
 		if (all_compiled)
 		{
-            pthread_mutex_lock(&config->simulation_mutex);
+			pthread_mutex_lock(&config->simulation_mutex);
 			config->state_of_sim = 0;
-            pthread_mutex_unlock(&config->simulation_mutex);
+			pthread_mutex_unlock(&config->simulation_mutex);
 			return (NULL);
 		}
-	usleep(1000); // changed this from sleeping 1000 seconds to 1ms 
-    }
+		usleep(1000); // changed this from sleeping 1000 seconds to 1ms
+	}
 }
