@@ -66,6 +66,7 @@ t_dongle* dongles;
 t_coder* coders;
 long long state_of_sim; // 1 for working 
 pthread_mutex_t simulation_mutex;
+pthread_mutex_t print_mutex;
 }t_config;
 
 int parsing_args(char **args);

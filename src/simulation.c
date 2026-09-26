@@ -43,6 +43,7 @@ void* routine(void *uncasted_coder)
         printf("dongle acquired\n");
         printf("then you kys\n");
         smart_sleep(coder,coder->time_to_burnout);
+        pthread_mutex_unlock(&coder->left->mutex);
     }
    compile(coder);
    debug(coder);
@@ -65,15 +66,24 @@ int simulate(char **args)
             return (FAILURE);
         i++;
     }
-    pthread_create(&monitor_thread, NULL, monitor, &config); //this was isnide while loop    
-            i = 0;
+    if(pthread_create(&monitor_thread, NULL, monitor, &config))//this was isnide while loop    
+       return ( FAILURE);     
+    
+    int join_failed = 0;
+    if(pthread_join(monitor_thread, NULL))
+        join_failed = 1;
+
+    i = 0;
     while(i <config.number_of_coders)
     {
         if (pthread_join(config.coders[i].thread, NULL))
-            return (FAILURE);
+            join_failed = 1;
         i++;
     }
- 
+    
+    if(join_failed)
+        return (FAILURE);
+
     // errro handling 
     return (SUCCESS);
 }

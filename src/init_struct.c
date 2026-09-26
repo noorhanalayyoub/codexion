@@ -25,6 +25,12 @@ if(pthread_mutex_init(&config->simulation_mutex, NULL))
     { printf("simulation_mutex initialization failed\n");
             return (NULL);
     }
+
+if(pthread_mutex_init(&config->print_mutex, NULL))
+    { printf("print mutex initialization failed\n");
+            return (NULL);
+    }
+
 return NULL;
 }
 
@@ -39,6 +45,7 @@ t_coder* init_coders(t_config* config, t_dongle* dongles)
         return (NULL);
     while(i < config->number_of_coders)
     {
+    coders[i].number = i;
     coders[i].config = config;
     coders[i].time_to_burnout = config->time_to_burnout;
     coders[i].time_of_last_compile = config->start_of_simulation;
