@@ -5,6 +5,17 @@
 int	compile(t_coder *coder)
 {   
     print_state(coder, "compile");
+    if(coder->number %2)
+    {
+        pthread_mutex_lock(&coder->left->mutex);
+        //idk 
+        pthread_mutex_unlock(&coder->left->mutex);
+    }
+    else {
+        pthread_mutex_lock(&coder->right->mutex);
+        //idk 
+        pthread_mutex_unlock(&coder->right->mutex);
+    }
 	return (SUCCESS);
 }
 

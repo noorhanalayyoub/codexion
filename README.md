@@ -70,4 +70,5 @@
 - [what are enums](https://www.w3schools.com/c/c_enums.php)
 - [heaps](https://dev.to/paulike/heap-sort-1j4h)
 - [priority queue](www.youtube.com/watch?v=yntfI_jqNms)
+- [how does cpu schedule](www.youtube.com/watch?v=O2tV9q6784k&t=52s)
 - man page
