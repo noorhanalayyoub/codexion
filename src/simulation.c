@@ -8,14 +8,18 @@ int	compile(t_coder *coder)
     if(coder->number %2)
     {
         pthread_mutex_lock(&coder->left->mutex);
-        //idk 
-        pthread_mutex_unlock(&coder->left->mutex);
+        smart_sleep(coder, coder->config->time_to_compile);
+        pthread_mutex_unlock(&coder->right->mutex);
     }
     else {
         pthread_mutex_lock(&coder->right->mutex);
-        //idk 
-        pthread_mutex_unlock(&coder->right->mutex);
+        smart_sleep(coder, coder->config->time_to_compile);
+        pthread_mutex_unlock(&coder->left->mutex);
     }
+    pthread_mutex_lock(&coder->config->simulation_mutex);
+    coder->time_of_last_compile = get_time_ms(); 
+    coder->compiles_left--;
+    pthread_mutex_unlock(&coder->config->simulation_mutex);
 	return (SUCCESS);
 }
 
@@ -49,8 +53,10 @@ int	refactor(t_coder *coder)
 void	*routine(void *uncasted_coder)
 {
 	t_coder	*coder;
+    int compiles_required;
 
 	coder = (t_coder *)uncasted_coder;
+    compiles_required = coder->compiles_left;
 	if (coder->config->number_of_coders == 1)
 	{
 		pthread_mutex_lock(&coder->left->mutex);
@@ -59,9 +65,14 @@ void	*routine(void *uncasted_coder)
 		smart_sleep(coder, coder->time_to_burnout);
 		pthread_mutex_unlock(&coder->left->mutex);
 	}
+    while(compiles_required){
 	compile(coder);
 	debug(coder);
 	refactor(coder);
+    compiles_required--;
+    if(!check_sim_state(coder))
+        break;
+    }
 }
 int	simulate(char **args)
 {

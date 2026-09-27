@@ -16,36 +16,49 @@ void	init_node(t_node *node, t_coder *coder, int priority)
 	node->next = NULL;
 	node->priority = priority;
 }
-void	append_element(t_pq *priority_queue, t_coder *coder)
-{
-	int	priority;
-		t_node *temp_node;
 
-	t_node current_node; // create a node
+int	append_element(t_pq *priority_queue, t_coder *coder)
+{
+	int		priority;
+	t_node	*temp_node;
+	t_node	*new_node;
+
+	new_node = malloc(sizeof(t_node));
+	if (new_node == NULL)
+		return (FAILURE);
 	priority = priority_queue->length;
-	init_node(&current_node, coder, priority); // send this node by ref
+	init_node(new_node, coder, priority); // send this node by ref
 	if (!priority_queue->length)
 	{
 		priority_queue->length++;
-		priority_queue->head = &current_node;
-		priority_queue->last = &current_node;
+		priority_queue->head = new_node;
+		priority_queue->last = new_node;
 	}
 	else
 	{
 		temp_node = priority_queue->last;
-		temp_node->next = &current_node;
-		priority_queue->last = &current_node;
+		temp_node->next = new_node;
+		priority_queue->last = new_node;
 		priority_queue->length++;
 	}
 	// aooend to th end and move last pointer
+	return (SUCCESS);
 }
 
 int	extract(t_pq *priority_queue)
 {
-	int	result;
+	int		result;
+	t_node	*old_head;
 
-	result = priority_queue->head->value;
-	priority_queue->head = priority_queue->head->next;
+	if (priority_queue->head == NULL)
+		return (FAILURE);
+	old_head = priority_queue->head;
+	result = old_head->value;
+	priority_queue->head = old_head->next;
+	priority_queue->length--;
+	if (priority_queue->length == 0)
+		priority_queue->last = NULL;
+	free(old_head);
 	return (result);
 	// remove the first element an dchnage head pointer
 }
