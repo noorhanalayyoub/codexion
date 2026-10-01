@@ -38,7 +38,8 @@ typedef enum s_scheduler
 }						t_scheduler;
 
 typedef struct s_dongle
-{
+{   
+    long long           released_at;
 	int					state;
 	int					cooldown;
 	pthread_mutex_t		mutex;
