@@ -71,4 +71,5 @@
 - [heaps](https://dev.to/paulike/heap-sort-1j4h)
 - [priority queue](www.youtube.com/watch?v=yntfI_jqNms)
 - [how does cpu schedule](www.youtube.com/watch?v=O2tV9q6784k&t=52s)
+- [makefile tutorial](https://makefiletutorial.com/#why-do-makefiles-exist)
 - man page
