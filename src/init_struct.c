@@ -1,10 +1,5 @@
 #include "codexion.h"
 
-void	*idk_yet(void *arg)
-{
-	printf("function idk yet\n");
-	return (NULL);
-}
 
 void	*init_config(char **args, t_config *config)
 {

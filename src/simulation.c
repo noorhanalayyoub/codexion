@@ -73,6 +73,7 @@ void	*routine(void *uncasted_coder)
     if(!check_sim_state(coder))
         break;
     }
+    return (NULL);
 }
 int	simulate(char **args)
 {
