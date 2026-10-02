@@ -2,10 +2,8 @@
 
 void	smart_sleep(t_coder *coder, long long time_in_ms)
 {
-	long long	time_in_micro;
 	long long	started;
 
-	time_in_micro = time_in_ms * 1000;
 	started = get_time_ms();
 	while (get_time_ms() - started < time_in_ms)
 	{
