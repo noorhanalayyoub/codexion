@@ -8,22 +8,11 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+#include <stdbool.h>
+
 
 typedef struct s_config	t_config;
 
-typedef struct s_node
-{
-	int					priority;
-	int					value;
-	struct s_node		*next;
-}						t_node;
-
-typedef struct s_pq
-{
-	t_node				*head;
-	t_node				*last;
-	int					length;
-}						t_pq;
 
 typedef enum r_value
 {
@@ -75,6 +64,31 @@ typedef struct s_config
 	pthread_mutex_t		print_mutex;
 }						t_config;
 
+typedef struct s_node
+{
+	int							value;
+	size_t					    priority;
+	size_t						ticket_id;
+}								t_node;
+
+typedef struct s_pq
+{
+	t_node				    *heap;
+	size_t					capacity;
+	size_t					count;
+	size_t					ticket;
+}							t_pq;
+
+// interface
+t_pq*	init_pq(size_t capacity);
+void	free_pq(t_pq *pq);
+bool	pq_is_empty(t_pq* pq);
+bool	pq_insert(t_pq* pq, int value, size_t priority);
+bool	pq_pop(t_pq* pq, int *id);
+
+// helpers
+void    pq_sift_up(t_pq* pq);
+void    pq_sift_down(t_pq* pq);
 int						parsing_args(char **args);
 int						ft_atoi(const char *str);
 int						ft_isdigit(int c);
@@ -89,8 +103,5 @@ void					*monitor(void *uncasted_config);
 int						simulate(char **args);
 int						check_sim_state(t_coder *coder);
 void	                print_state(t_coder *coder, char *state);
-int	extract(t_pq *priority_queue);
-void	init_pq(t_pq *priority_queue);
-int	append_element(t_pq *priority_queue, t_coder *coder);
 
 #endif
