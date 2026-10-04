@@ -72,4 +72,6 @@
 - [priority queue](www.youtube.com/watch?v=yntfI_jqNms)
 - [how does cpu schedule](www.youtube.com/watch?v=O2tV9q6784k&t=52s)
 - [makefile tutorial](https://makefiletutorial.com/#why-do-makefiles-exist)
+- [why use stderr](https://stackoverflow.com/questions/19870331/why-use-stderr-when-printf-works-fine)
+- [buffers in c](https://medium.com/@sreehema2025/understanding-buffers-in-c-why-your-printf-might-not-show-up-immediately-98c4d9d60d75)
 - man page

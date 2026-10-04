@@ -50,7 +50,7 @@ typedef struct s_coder
 	int					time_to_burnout;
 	int					number;
 	int					compiles_left;
-	int					time_of_last_compile;
+	long long           time_of_last_compile;
 	pthread_t			thread;
 	t_dongle			*left;
 	t_dongle			*right;
@@ -67,7 +67,7 @@ typedef struct s_config
 	int					number_of_compiles_required;
 	int					dongle_cooldown;
 	t_scheduler			scheduler;
-	int					start_of_simulation;
+	long long           start_of_simulation;
 	t_dongle			*dongles;
 	t_coder				*coders;
 	long long state_of_sim; // 1 for working
@@ -89,5 +89,8 @@ void					*monitor(void *uncasted_config);
 int						simulate(char **args);
 int						check_sim_state(t_coder *coder);
 void	                print_state(t_coder *coder, char *state);
+int	extract(t_pq *priority_queue);
+void	init_pq(t_pq *priority_queue);
+int	append_element(t_pq *priority_queue, t_coder *coder);
 
 #endif
