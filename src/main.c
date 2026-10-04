@@ -6,8 +6,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 9)
 	{
-		printf("number of command line arguments must be exactly 8\n");
-		printf("usage:/.codexion number_of_coders time_to_burnout time_to_compile time_to_debug time_to_refactor number_of_compiles_required dongle_cooldown scheduler");
+		fprintf(stderr,"number of command line arguments must be exactly 8\n"
+                "usage:/.codexion number_of_coders time_to_burnout time_to_compile time_to_debug time_to_refactor number_of_compiles_required dongle_cooldown scheduler");
 		return (1);
 	}
 	else
@@ -15,17 +15,17 @@ int	main(int argc, char **argv)
 		return_value = parsing_args(argv);
 		if (return_value == FAILURE)
 		{
-			printf("invalid number\n");
+			fprintf(stderr,"invalid number\n");
 			return (1);
 		}
 		if (strcmp(argv[8], "fifo") && strcmp(argv[8], "edf"))
 		{
-			printf("invalid scheduler\n");
+			fprintf(stderr,"invalid scheduler\n");
 			return (1);
 		}
-        if (atoi(argv[1]) == 1)
+        if (atoi(argv[1]) == 0)
         {
-        printf("number of coders cant be zero\n");
+        fprintf(stderr,"number of coders cant be zero\n");
         return (1);
         }
 		simulate(argv);

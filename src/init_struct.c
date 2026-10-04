@@ -18,12 +18,12 @@ void	*init_config(char **args, t_config *config)
 	config->state_of_sim = 1;
 	if (pthread_mutex_init(&config->simulation_mutex, NULL))
 	{
-		printf("simulation_mutex initialization failed\n");
+		fprintf(stderr,"simulation_mutex initialization failed\n");
 		return (NULL);
 	}
 	if (pthread_mutex_init(&config->print_mutex, NULL))
 	{
-		printf("print mutex initialization failed\n");
+		fprintf(stderr,"print mutex initialization failed\n");
 		return (NULL);
 	}
 	return (NULL);
