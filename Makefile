@@ -15,7 +15,7 @@ SRC = src/check_sim_status.c \
 	  src/parse.c \ 
 	  src/simulation.c 
 
-OBJS = $(SRC:.c=.o) # take a;; .c files in src and change their extension to .o
+OBJS = $(SRC:.c=.o) # take all .c files in src and change their extension to .o
 
 all: $(NAME)
 
