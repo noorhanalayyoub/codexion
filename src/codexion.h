@@ -12,7 +12,14 @@
 
 
 typedef struct s_config	t_config;
+typedef struct s_pq t_pq;
 
+
+typedef enum e_dongle_state
+{
+	BUSY,
+	FREE
+} t_dongle_state;
 
 typedef enum r_value
 {
@@ -32,6 +39,9 @@ typedef struct s_dongle
 	int					state;
 	int					cooldown;
 	pthread_mutex_t		mutex;
+	// add condition and PQ for each dongle
+	pthread_cond_t		dongle_cond;
+	t_pq				*waiters;
 }						t_dongle;
 
 typedef struct s_coder
@@ -80,15 +90,15 @@ typedef struct s_pq
 }							t_pq;
 
 // interface
-t_pq*	init_pq(size_t capacity);
-void	free_pq(t_pq *pq);
-bool	pq_is_empty(t_pq* pq);
-bool	pq_insert(t_pq* pq, int value, size_t priority);
-bool	pq_pop(t_pq* pq, int *id);
-
+t_pq*					init_pq(size_t capacity);
+void					free_pq(t_pq *pq);
+bool					pq_is_empty(t_pq* pq);
+bool					pq_insert(t_pq* pq, int value, size_t priority);
+bool                    pq_pop(t_pq* pq, int* id);
+int						pq_peek(t_pq *pq);
 // helpers
-void    pq_sift_up(t_pq* pq);
-void    pq_sift_down(t_pq* pq);
+void    				pq_sift_up(t_pq* pq);
+void    				pq_sift_down(t_pq* pq);
 int						parsing_args(char **args);
 int						ft_atoi(const char *str);
 int						ft_isdigit(int c);
@@ -103,5 +113,7 @@ void					*monitor(void *uncasted_config);
 int						simulate(char **args);
 int						check_sim_state(t_coder *coder);
 void	                print_state(t_coder *coder, char *state);
+t_value					request_dongle(t_coder *coder, t_dongle *dongle);
+void					release_dongle(t_dongle *dongle);
 
 #endif

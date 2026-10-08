@@ -1,28 +1,39 @@
-#include "codexion.h"
+include "codexion.h"
 #include <pthread.h>
 
 // monitor routien for monitor thread
 int	compile(t_coder *coder)
 {   
-    print_state(coder, "compile");
-    if(coder->number %2)
+    t_dongle    *first;
+    t_dongle    *second;
+
+    first = coder->left;
+    second = coder->right;
+    if (coder->number % 2 == 0)
     {
-        pthread_mutex_lock(&coder->left->mutex);
-        smart_sleep(coder, coder->config->time_to_compile);
-        pthread_mutex_unlock(&coder->right->mutex);
+        first = coder->right;
+        second = coder->left;
     }
-    else {
-        pthread_mutex_lock(&coder->right->mutex);
-        smart_sleep(coder, coder->config->time_to_compile);
-        pthread_mutex_unlock(&coder->left->mutex);
+    if (request_dongle(coder, first) == FAILURE)
+        return (FAILURE);
+    print_state(coder, "has taken a dongle");
+    if (request_dongle(coder, second) == FAILURE)
+    {
+        release_dongle(first);
+        return (FAILURE);
     }
+    print_state(coder, "has taken a dongle");
+    print_state(coder, "is compiling");
+    smart_sleep(coder, coder->config->time_to_compile);
+    release_dongle(first);
+    release_dongle(second);
     pthread_mutex_lock(&coder->config->simulation_mutex);
     coder->time_of_last_compile = get_time_ms(); 
     coder->compiles_left--;
     pthread_mutex_unlock(&coder->config->simulation_mutex);
 	return (SUCCESS);
 }
-
+	
 int	debug(t_coder *coder)
 {
 	int	result;
@@ -113,3 +124,5 @@ int	simulate(char **args)
 	// errro handling
 	return (SUCCESS);
 }
+
+
