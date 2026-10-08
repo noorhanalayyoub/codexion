@@ -122,9 +122,12 @@ int	simulate(char **args)
 			join_failed = 1;
 		i++;
 	}
-	if (join_failed)
+	if (join_failed){
+        cleanup(&config);
 		return (FAILURE);
+    }
 	// errro handling
+    cleanup(&config);
 	return (SUCCESS);
 }
 

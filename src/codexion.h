@@ -114,5 +114,7 @@ int						check_sim_state(t_coder *coder);
 void	                print_state(t_coder *coder, char *state);
 t_value					request_dongle(t_coder *coder, t_dongle *dongle);
 void					release_dongle(t_dongle *dongle);
+void	cleanup_dongles(t_dongle *dongles, int number);
+void	cleanup(t_config *config);
 
 #endif
