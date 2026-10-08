@@ -1,7 +1,5 @@
 #include "codexion.h"
 
-// i am not sure where i should lock and unlock mutex lock
-// when accessing compiles left and time to burnout
 void	*monitor(void *uncasted_config)
 {
 	t_config	*config;
