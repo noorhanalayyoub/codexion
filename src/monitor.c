@@ -18,7 +18,7 @@ void	*monitor(void *uncasted_config)
 			if (config->time_to_burnout <= get_time_ms()
 				- config->coders[i].time_of_last_compile)
 			{
-				printf("coder %d burned out\n", i);
+				printf("coder %d burned out\n", i+1);
 				config->state_of_sim = 0;
 				pthread_mutex_unlock(&config->simulation_mutex);
 				return (NULL);

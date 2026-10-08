@@ -50,6 +50,7 @@ t_value request_dongle(t_coder *coder, t_dongle *dongle)
     }
     dongle->state = BUSY;
     int*    popped;
+    popped = NULL;
 
     pq_pop(dongle->waiters, popped);
     pthread_mutex_unlock(&dongle->mutex);

@@ -24,11 +24,13 @@ int	compile(t_coder *coder)
     }
     print_state(coder, "has taken a dongle");
     print_state(coder, "is compiling");
+    pthread_mutex_lock(&coder->config->simulation_mutex);
+    coder->time_of_last_compile = get_time_ms(); 
+    pthread_mutex_unlock(&coder->config->simulation_mutex);
     smart_sleep(coder, coder->config->time_to_compile);
     release_dongle(first);
     release_dongle(second);
     pthread_mutex_lock(&coder->config->simulation_mutex);
-    coder->time_of_last_compile = get_time_ms(); 
     coder->compiles_left--;
     pthread_mutex_unlock(&coder->config->simulation_mutex);
 	return (SUCCESS);

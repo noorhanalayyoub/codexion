@@ -65,9 +65,16 @@ t_dongle	*init_dongles(t_config *config)
 	{
 		if (pthread_mutex_init(&dongles[i].mutex, NULL))
 			return (NULL);
-		dongles[i].state = 1;
+        if(!pthread_cond_init(&dongles[i].dongle_cond, NULL))
+                return (NULL);
+		dongles[i].state = FREE;
+        dongles[i].released_at = 0;
 		dongles[i].cooldown = config->dongle_cooldown;
+        dongles[i].waiters = init_pq(config->number_of_coders);
+        if (!dongles[i].waiters)
+            return (NULL);
 		i++;
 	}
+
 	return (dongles);
 }
