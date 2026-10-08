@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalayyou <nalayyou@learner.42.tech>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 17:07:26 by nalayyou          #+#    #+#             */
+/*   Updated: 2026/10/08 17:07:29 by nalayyou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
 
 void	*monitor(void *uncasted_config)
@@ -18,7 +30,7 @@ void	*monitor(void *uncasted_config)
 			if (config->time_to_burnout <= get_time_ms()
 				- config->coders[i].time_of_last_compile)
 			{
-				printf("coder %d burned out\n", i+1);
+				printf("coder %d burned out\n", i + 1);
 				config->state_of_sim = 0;
 				pthread_mutex_unlock(&config->simulation_mutex);
 				return (NULL);
@@ -33,7 +45,7 @@ void	*monitor(void *uncasted_config)
 			pthread_mutex_lock(&config->simulation_mutex);
 			config->state_of_sim = 0;
 			pthread_mutex_unlock(&config->simulation_mutex);
-            // call cleanup here
+			// call cleanup here
 			return (NULL);
 		}
 		usleep(1000); // changed this from sleeping 1000 seconds to 1ms

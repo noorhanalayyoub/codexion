@@ -1,47 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   simulation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalayyou <nalayyou@learner.42.tech>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 17:08:41 by nalayyou          #+#    #+#             */
+/*   Updated: 2026/10/08 17:08:46 by nalayyou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
-#include <pthread.h>
 
-// monitor routien for monitor thread
 int	compile(t_coder *coder)
-{   
-    t_dongle    *first;
-    t_dongle    *second;
+{
+	t_dongle	*first;
+	t_dongle	*second;
 
-    first = coder->left;
-    second = coder->right;
-    if (coder->number % 2 == 0)
-    {
-        first = coder->right;
-        second = coder->left;
-    }
-    if (request_dongle(coder, first) == FAILURE)
-        return (FAILURE);
-    print_state(coder, "has taken a dongle");
-    if (request_dongle(coder, second) == FAILURE)
-    {
-        release_dongle(first);
-        return (FAILURE);
-    }
-    print_state(coder, "has taken a dongle");
-    print_state(coder, "is compiling");
-    pthread_mutex_lock(&coder->config->simulation_mutex);
-    coder->time_of_last_compile = get_time_ms(); 
-    pthread_mutex_unlock(&coder->config->simulation_mutex);
-    smart_sleep(coder, coder->config->time_to_compile);
-    release_dongle(first);
-    release_dongle(second);
-    pthread_mutex_lock(&coder->config->simulation_mutex);
-    coder->compiles_left--;
-    pthread_mutex_unlock(&coder->config->simulation_mutex);
+	first = coder->left;
+	second = coder->right;
+	if (coder->number % 2 == 0)
+	{
+		first = coder->right;
+		second = coder->left;
+	}
+	if (request_dongle(coder, first) == FAILURE)
+		return (FAILURE);
+	print_state(coder, "has taken a dongle");
+	if (request_dongle(coder, second) == FAILURE)
+	{
+		release_dongle(first);
+		return (FAILURE);
+	}
+	print_state(coder, "has taken a dongle");
+	print_state(coder, "is compiling");
+	pthread_mutex_lock(&coder->config->simulation_mutex);
+	coder->time_of_last_compile = get_time_ms();
+	pthread_mutex_unlock(&coder->config->simulation_mutex);
+	smart_sleep(coder, coder->config->time_to_compile);
+	release_dongle(first);
+	release_dongle(second);
+	pthread_mutex_lock(&coder->config->simulation_mutex);
+	coder->compiles_left--;
+	pthread_mutex_unlock(&coder->config->simulation_mutex);
 	return (SUCCESS);
 }
-	
+
 int	debug(t_coder *coder)
 {
 	int	result;
 
-    print_state(coder, "is debugging");
-    smart_sleep(coder, coder->config->time_to_debug);
+	print_state(coder, "is debugging");
+	smart_sleep(coder, coder->config->time_to_debug);
 	result = check_sim_state(coder);
 	if (result)
 		return (SUCCESS);
@@ -51,8 +61,8 @@ int	debug(t_coder *coder)
 int	refactor(t_coder *coder)
 {
 	int	result;
-    
-    print_state(coder, "is refactoring");
+
+	print_state(coder, "is refactoring");
 	smart_sleep(coder, coder->config->time_to_refactor);
 	result = check_sim_state(coder);
 	if (result)
@@ -66,10 +76,10 @@ int	refactor(t_coder *coder)
 void	*routine(void *uncasted_coder)
 {
 	t_coder	*coder;
-    int compiles_required;
+	int		compiles_required;
 
 	coder = (t_coder *)uncasted_coder;
-    compiles_required = coder->compiles_left;
+	compiles_required = coder->compiles_left;
 	if (coder->config->number_of_coders == 1)
 	{
 		pthread_mutex_lock(&coder->left->mutex);
@@ -78,16 +88,17 @@ void	*routine(void *uncasted_coder)
 		smart_sleep(coder, coder->time_to_burnout);
 		pthread_mutex_unlock(&coder->left->mutex);
 	}
-    while(compiles_required){
-	compile(coder);
-	debug(coder);
-	refactor(coder);
-    compiles_required--;
-    if(!check_sim_state(coder))
-        // cleanup here ?? 
-        break;
-    }
-    return (NULL);
+	while (compiles_required)
+	{
+		compile(coder);
+		debug(coder);
+		refactor(coder);
+		compiles_required--;
+		if (!check_sim_state(coder))
+			// cleanup here ??
+			break ;
+	}
+	return (NULL);
 }
 int	simulate(char **args)
 {
@@ -122,13 +133,12 @@ int	simulate(char **args)
 			join_failed = 1;
 		i++;
 	}
-	if (join_failed){
-        cleanup(&config);
+	if (join_failed)
+	{
+		cleanup(&config);
 		return (FAILURE);
-    }
+	}
 	// errro handling
-    cleanup(&config);
+	cleanup(&config);
 	return (SUCCESS);
 }
-
-
