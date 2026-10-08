@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nalayyou <nalayyou@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/08 17:07:44 by nalayyou          #+#    #+#             */
-/*   Updated: 2026/10/08 17:07:45 by nalayyou         ###   ########.fr       */
+/*   Created: 2026/10/08 17:40:03 by nalayyou          #+#    #+#             */
+/*   Updated: 2026/10/08 17:40:04 by nalayyou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	print_state(t_coder *coder, char *state)
+int	debug(t_coder *coder)
 {
-	if (!check_sim_state(coder))
-		return ;
-	pthread_mutex_lock(&coder->config->print_mutex);
-	if (!check_sim_state(coder))
-	{
-		pthread_mutex_unlock(&coder->config->print_mutex);
-		return ;
-	}
-	printf("%lld\t coder %d %s\n", get_time_ms()
-		- coder->config->start_of_simulation, coder->number, state);
-	pthread_mutex_unlock(&coder->config->print_mutex);
+	int	result;
+
+	print_state(coder, "is debugging");
+	smart_sleep(coder, coder->config->time_to_debug);
+	result = check_sim_state(coder);
+	if (result)
+		return (SUCCESS);
+	return (FAILURE);
 }

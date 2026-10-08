@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalayyou <nalayyou@learner.42.tech>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 17:08:08 by nalayyou          #+#    #+#             */
+/*   Updated: 2026/10/08 17:08:09 by nalayyou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
 
 int	ft_isdigit(int c)
@@ -11,7 +23,6 @@ static int	ft_isnumber(const char *s)
 {
 	int	i;
 
-	// guard against empty strings
 	if (!s || !s[0])
 		return (FAILURE);
 	i = 0;
@@ -40,7 +51,6 @@ int	ft_atoi(const char *str)
 			return (-1);
 		index++;
 	}
-	// CHANGE: ADD OVERFLOW CHECK
 	while (str[index])
 	{
 		digit = str[index] - '0';
@@ -62,7 +72,6 @@ int	parsing_args(char **args)
 	while (i < 8)
 	{
 		c = args[i];
-		// CHANGE: removed redundent print statement and guard against empty input
 		if (ft_isnumber(c) == FAILURE)
 			return (FAILURE);
 		if (ft_atoi(c) == -1)

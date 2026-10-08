@@ -50,8 +50,38 @@
       ```
       pthread_exit(NULL);
       ```
-      
+
+## project layout
+main.c        → checks 8 args, validates, calls simulate()
+simulation.c  → builds everything, spawns N coder threads + 1 monitor thread, joins them
+  ├─ coder thread:   compile → debug → refactor (loop)   [routine()]
+
+  └─ monitor thread: watches for burnout / everyone done [monitor.c]
+
+server.c      → the "dongle server": hands dongles to coders in scheduled order
+pq.c / pq_helpers.c → the priority queue (min-heap) that server.c uses
+
+
 # Instructions
+
+## Usage
+
+```bash
+git clone <repo_url>
+cd codexion
+make
+./codexion number_of_coders time_to_burnout time_to_compile time_to_debug \
+           time_to_refactor number_of_compiles_required dongle_cooldown scheduler
+```
+
+- All times are in milliseconds.
+- `scheduler` is `fifo` or `edf`.
+
+Example:
+
+```bash
+./codexion 5 800 200 200 200 7 50 fifo
+```
 
 # Resources
 - [threading playlist on youtube](https://www.youtube.com/playlist?list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2)

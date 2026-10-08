@@ -1,62 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   simulation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalayyou <nalayyou@learner.42.tech>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 17:34:48 by nalayyou          #+#    #+#             */
+/*   Updated: 2026/10/08 17:34:50 by nalayyou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "codexion.h"
-#include <pthread.h>
-
-// monitor routien for monitor thread
-int	compile(t_coder *coder)
-{   
-    print_state(coder, "compile");
-    if(coder->number %2)
-    {
-        pthread_mutex_lock(&coder->left->mutex);
-        smart_sleep(coder, coder->config->time_to_compile);
-        pthread_mutex_unlock(&coder->right->mutex);
-    }
-    else {
-        pthread_mutex_lock(&coder->right->mutex);
-        smart_sleep(coder, coder->config->time_to_compile);
-        pthread_mutex_unlock(&coder->left->mutex);
-    }
-    pthread_mutex_lock(&coder->config->simulation_mutex);
-    coder->time_of_last_compile = get_time_ms(); 
-    coder->compiles_left--;
-    pthread_mutex_unlock(&coder->config->simulation_mutex);
-	return (SUCCESS);
-}
-
-int	debug(t_coder *coder)
-{
-	int	result;
-
-    print_state(coder, "debug");
-    smart_sleep(coder, coder->config->time_to_debug);
-	result = check_sim_state(coder);
-	if (result)
-		return (SUCCESS);
-	return (FAILURE);
-}
-
-int	refactor(t_coder *coder)
-{
-	int	result;
-    
-    print_state(coder, "refactor");
-	smart_sleep(coder, coder->config->time_to_refactor);
-	result = check_sim_state(coder);
-	if (result)
-		return (SUCCESS);
-	return (FAILURE);
-	// this version is correct
-	// constant checking happens inside smart sleep
-	// when returning could mean that the simulation is over
-}
 
 void	*routine(void *uncasted_coder)
 {
 	t_coder	*coder;
-    int compiles_required;
+	int		compiles_required;
 
 	coder = (t_coder *)uncasted_coder;
-    compiles_required = coder->compiles_left;
+	compiles_required = coder->compiles_left;
 	if (coder->config->number_of_coders == 1)
 	{
 		pthread_mutex_lock(&coder->left->mutex);
@@ -65,51 +27,70 @@ void	*routine(void *uncasted_coder)
 		smart_sleep(coder, coder->time_to_burnout);
 		pthread_mutex_unlock(&coder->left->mutex);
 	}
-    while(compiles_required){
-	compile(coder);
-	debug(coder);
-	refactor(coder);
-    compiles_required--;
-    if(!check_sim_state(coder))
-        break;
-    }
-    return (NULL);
+	while (compiles_required)
+	{
+		compile(coder);
+		debug(coder);
+		refactor(coder);
+		compiles_required--;
+		if (!check_sim_state(coder))
+			break ;
+	}
+	return (NULL);
 }
+
+static int	start_coders(t_config *config)
+{
+	int	i;
+
+	i = 0;
+	while (i < config->number_of_coders)
+	{
+		if (pthread_create(&config->coders[i].thread, NULL, routine,
+				&config->coders[i]))
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
+static int	join_all(t_config *config, pthread_t monitor_thread)
+{
+	int	i;
+	int	join_failed;
+
+	join_failed = 0;
+	if (pthread_join(monitor_thread, NULL))
+		join_failed = 1;
+	i = 0;
+	while (i < config->number_of_coders)
+	{
+		if (pthread_join(config->coders[i].thread, NULL))
+			join_failed = 1;
+		i++;
+	}
+	return (join_failed);
+}
+
 int	simulate(char **args)
 {
 	t_config	config;
-	int			i;
 	pthread_t	monitor_thread;
-	int			join_failed;
 
 	init_config(args, &config);
 	config.dongles = init_dongles(&config);
 	config.coders = init_coders(&config, config.dongles);
 	if (config.coders == NULL || config.dongles == NULL)
 		return (FAILURE);
-	i = 0;
-	while (i < config.number_of_coders)
-	{
-		if (pthread_create(&config.coders[i].thread, NULL, routine,
-				&config.coders[i]))
-			return (FAILURE);
-		i++;
-	}
+	if (start_coders(&config) == FAILURE)
+		return (FAILURE);
 	if (pthread_create(&monitor_thread, NULL, monitor, &config))
-		// this was isnide while loop
 		return (FAILURE);
-	join_failed = 0;
-	if (pthread_join(monitor_thread, NULL))
-		join_failed = 1;
-	i = 0;
-	while (i < config.number_of_coders)
+	if (join_all(&config, monitor_thread))
 	{
-		if (pthread_join(config.coders[i].thread, NULL))
-			join_failed = 1;
-		i++;
-	}
-	if (join_failed)
+		cleanup(&config);
 		return (FAILURE);
-	// errro handling
+	}
+	cleanup(&config);
 	return (SUCCESS);
 }

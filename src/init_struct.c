@@ -1,5 +1,16 @@
-#include "codexion.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalayyou <nalayyou@learner.42.tech>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/08 17:08:21 by nalayyou          #+#    #+#             */
+/*   Updated: 2026/10/08 17:08:23 by nalayyou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "codexion.h"
 
 void	*init_config(char **args, t_config *config)
 {
@@ -18,12 +29,12 @@ void	*init_config(char **args, t_config *config)
 	config->state_of_sim = 1;
 	if (pthread_mutex_init(&config->simulation_mutex, NULL))
 	{
-		fprintf(stderr,"simulation_mutex initialization failed\n");
+		fprintf(stderr, "simulation_mutex initialization failed\n");
 		return (NULL);
 	}
 	if (pthread_mutex_init(&config->print_mutex, NULL))
 	{
-		fprintf(stderr,"print mutex initialization failed\n");
+		fprintf(stderr, "print mutex initialization failed\n");
 		return (NULL);
 	}
 	return (NULL);
@@ -40,7 +51,7 @@ t_coder	*init_coders(t_config *config, t_dongle *dongles)
 		return (NULL);
 	while (i < config->number_of_coders)
 	{
-		coders[i].number = i+1;
+		coders[i].number = i + 1;
 		coders[i].config = config;
 		coders[i].time_to_burnout = config->time_to_burnout;
 		coders[i].time_of_last_compile = config->start_of_simulation;
@@ -65,8 +76,14 @@ t_dongle	*init_dongles(t_config *config)
 	{
 		if (pthread_mutex_init(&dongles[i].mutex, NULL))
 			return (NULL);
-		dongles[i].state = 1;
+		if (pthread_cond_init(&dongles[i].dongle_cond, NULL))
+			return (NULL);
+		dongles[i].state = FREE;
+		dongles[i].released_at = 0;
 		dongles[i].cooldown = config->dongle_cooldown;
+		dongles[i].waiters = init_pq(config->number_of_coders);
+		if (!dongles[i].waiters)
+			return (NULL);
 		i++;
 	}
 	return (dongles);
