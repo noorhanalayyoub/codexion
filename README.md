@@ -50,6 +50,31 @@
       ```
       pthread_exit(NULL);
       ```
+## Blocking cases handled
+
+- **Deadlock prevention:** Circular wait (one of Coffman's four conditions) is broken. Odd coders take their left dongle first, even coders take their right first, so a cycle of "everyone holds one dongle and waits for the next" can't form. If the second dongle can't be acquired, the first is released.
+- **Single coder:** With only one dongle, the coder waits until `time_to_burnout` and burns out instead of blocking forever.
+- **Starvation prevention:** The scheduler decides who gets a contested dongle. `fifo` serves requests in arrival order; `edf` serves the coder closest to burnout first. <!-- VERIFY -->
+- **Cooldown:** A released dongle can't be taken again until `dongle_cooldown` ms have passed. <!-- VERIFY: how it's checked -->
+- **Precise burnout detection:** A monitor thread checks every coder about every 1 ms and prints the burnout itself. <!-- VERIFY: print_state must skip output once state_of_sim is 0 -->
+- **Log serialization:** All output goes through one mutex so lines never interleave. <!-- VERIFY: mutex name -->
+
+## Thread synchronization mechanisms
+
+| Primitive | Used for |
+|-----------|----------|
+| `pthread_mutex_t` (per dongle) | Exclusive access to a dongle |
+| `pthread_cond_t` (per dongle) <!-- VERIFY --> | Sleep until the dongle is free or its cooldown ends, with no busy-waiting |
+| `simulation_mutex` | `state_of_sim`, `time_of_last_compile`, `compiles_left` |
+| Log mutex <!-- VERIFY --> | Serialized printing |
+
+**Race conditions prevented:**
+- A coder writes `time_of_last_compile` and `compiles_left` under `simulation_mutex`; the monitor reads them under the same mutex, so it never sees a stale or partial value.
+- `state_of_sim` is only written under `simulation_mutex`, so all coders see the stop consistently.
+
+**Coder/monitor communication:** Shared state guarded by `simulation_mutex`. Coders publish progress, the monitor polls it, and the monitor sets `state_of_sim = 0` to stop everyone. Coders check it between phases and in `smart_sleep`.
+
+**Shutdown:** `main` joins the monitor and all coders before `cleanup`, so no mutex is destroyed while still in use.
 
 ## project layout
 main.c        → checks 8 args, validates, calls simulate()
@@ -107,3 +132,4 @@ Example:
 - [makefile tutorial in practice](https://github.com/clementvidon/Makefile_tutor#version-1)
 - [purpose of pthread condition variables](https://www.onenoughtone.com/learn/pthread-condition-variables)
 - man page
+- AI was used for README, help with debugging, planning project and norminette
