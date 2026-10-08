@@ -49,7 +49,9 @@ t_value request_dongle(t_coder *coder, t_dongle *dongle)
         return (FAILURE);
     }
     dongle->state = BUSY;
-    pq_pop(dongle->waiters);
+    int*    popped;
+
+    pq_pop(dongle->waiters, popped);
     pthread_mutex_unlock(&dongle->mutex);
     return (SUCCESS);
 }
