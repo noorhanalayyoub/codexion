@@ -78,7 +78,7 @@ typedef struct s_config
 	long long			start_of_simulation;
 	t_dongle			*dongles;
 	t_coder				*coders;
-	long long state_of_sim; // 1 for working
+	long long			state_of_sim;
 	pthread_mutex_t		simulation_mutex;
 	pthread_mutex_t		print_mutex;
 }						t_config;
@@ -126,5 +126,10 @@ t_value					request_dongle(t_coder *coder, t_dongle *dongle);
 void					release_dongle(t_dongle *dongle);
 void					cleanup_dongles(t_dongle *dongles, int number);
 void					cleanup(t_config *config);
+int						compile(t_coder *coder);
+int						debug(t_coder *coder);
+int						refactor(t_coder *coder);
+int						pq_peek(t_pq *pq);
+bool					pq_is_empty(t_pq *pq);
 
 #endif

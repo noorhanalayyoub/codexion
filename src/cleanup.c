@@ -25,9 +25,9 @@ void	cleanup_dongles(t_dongle *dongles, int number)
 		index++;
 	}
 }
+
 void	cleanup(t_config *config)
 {
-	// check if theres anything inside each coder that needs to be freed
 	free(config->coders);
 	cleanup_dongles(config->dongles, config->number_of_coders);
 	free(config->dongles);

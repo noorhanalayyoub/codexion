@@ -42,13 +42,6 @@ void	free_pq(t_pq *pq)
 	free(pq);
 }
 
-bool	pq_is_empty(t_pq *pq)
-{
-	if (!pq || pq->count == 0)
-		return (true);
-	return (false);
-}
-
 bool	pq_insert(t_pq *pq, int value, size_t priority)
 {
 	if (!pq)
@@ -72,11 +65,4 @@ bool	pq_pop(t_pq *pq, int *id)
 	pq->heap[0] = pq->heap[pq->count];
 	pq_sift_down(pq);
 	return (true);
-}
-
-int	pq_peek(t_pq *pq)
-{
-	if (!pq || pq_is_empty(pq))
-		return (-1);
-	return (pq->heap[0].value);
 }

@@ -21,6 +21,7 @@ long long	get_time_ms(void)
 	time = tv.tv_sec * 1000LL + tv.tv_usec / 1000;
 	return (time);
 }
+
 void	ft_putstr_fd(char *message, int fd)
 {
 	write(fd, message, strlen(message));

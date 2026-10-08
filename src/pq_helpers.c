@@ -30,14 +30,6 @@ static void	pq_swap(t_node *a, t_node *b)
 	*b = temp;
 }
 
-/*
-when we insert a node, we insert it at the end of the array,
-	which leaves our tree unbalanced
-sift up checks the element we	added(at the end of the array),
-		and compares it to its parent
-if the node is less than it's parent, we swap them
-remember that this is a min heap and that the less priority should be on top
-*/
 void	pq_sift_up(t_pq *pq)
 {
 	size_t	child_index;
@@ -82,14 +74,6 @@ static size_t	find_min_child(t_pq *pq, size_t parent_index)
 		return (right_index);
 }
 
-/*
-  when we pop from our quque, removing the root element
-  we lost the root, so we take the last element and we place it in the root
-  but that means the tree now is unbalanced
-  sift down function starts from the root, and checks both children
-  it swaps the root with the minimum child
-  then it continues to do so until the element we set in the root is in its proper placement(no children are smaller)
-*/
 void	pq_sift_down(t_pq *pq)
 {
 	size_t	left;
