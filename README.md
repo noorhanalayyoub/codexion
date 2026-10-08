@@ -50,7 +50,16 @@
       ```
       pthread_exit(NULL);
       ```
-      
+
+## project layout
+main.c        → checks 8 args, validates, calls simulate()
+simulation.c  → builds everything, spawns N coder threads + 1 monitor thread, joins them
+  ├─ coder thread:   compile → debug → refactor (loop)   [routine()]
+  └─ monitor thread: watches for burnout / everyone done [monitor.c]
+server.c      → the "dongle server": hands dongles to coders in scheduled order
+pq.c / pq_helpers.c → the priority queue (min-heap) that server.c uses
+
+
 # Instructions
 
 # Resources
