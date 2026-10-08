@@ -29,5 +29,6 @@ int	main(int argc, char **argv)
         return (1);
         }
 		simulate(argv);
+        // cleanup in main????????
 	}
 }

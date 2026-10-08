@@ -39,7 +39,6 @@ typedef struct s_dongle
 	int					state;
 	int					cooldown;
 	pthread_mutex_t		mutex;
-	// add condition and PQ for each dongle
 	pthread_cond_t		dongle_cond;
 	t_pq				*waiters;
 }						t_dongle;

@@ -84,6 +84,7 @@ void	*routine(void *uncasted_coder)
 	refactor(coder);
     compiles_required--;
     if(!check_sim_state(coder))
+        // cleanup here ?? 
         break;
     }
     return (NULL);

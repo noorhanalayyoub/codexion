@@ -1,20 +1,5 @@
 #include "codexion.h"
 
-/* static void	wake_all_waiters(t_config *config)
-{
-	int	i;
- 
-	i = 0;
-	while (i < config->number_of_coders)
-	{
-		pthread_mutex_lock(&config->dongles[i].mutex);
-		pthread_cond_broadcast(&config->dongles[i].dongle_cond);
-		pthread_mutex_unlock(&config->dongles[i].mutex);
-		i++;
-	}
-}
-*/
-// claude suggested this fucntion , tested and code still fails
 void	*monitor(void *uncasted_config)
 {
 	t_config	*config;
@@ -48,7 +33,7 @@ void	*monitor(void *uncasted_config)
 			pthread_mutex_lock(&config->simulation_mutex);
 			config->state_of_sim = 0;
 			pthread_mutex_unlock(&config->simulation_mutex);
-//            wake_all_waiters(config);
+            // call cleanup here
 			return (NULL);
 		}
 		usleep(1000); // changed this from sleeping 1000 seconds to 1ms
