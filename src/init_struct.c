@@ -65,7 +65,7 @@ t_dongle	*init_dongles(t_config *config)
 	{
 		if (pthread_mutex_init(&dongles[i].mutex, NULL))
 			return (NULL);
-        if(!pthread_cond_init(&dongles[i].dongle_cond, NULL))
+        if(pthread_cond_init(&dongles[i].dongle_cond, NULL))
                 return (NULL);
 		dongles[i].state = FREE;
         dongles[i].released_at = 0;
