@@ -10,7 +10,7 @@ void	print_state(t_coder *coder, char *state)
 		pthread_mutex_unlock(&coder->config->print_mutex);
 		return ;
 	}
-	printf("%lld\t%d %s\n", get_time_ms() - coder->config->start_of_simulation,
+	printf("%lld\t coder %d %s\n", get_time_ms() - coder->config->start_of_simulation,
 		coder->number, state);
 	pthread_mutex_unlock(&coder->config->print_mutex);
 }

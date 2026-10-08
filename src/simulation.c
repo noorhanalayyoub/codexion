@@ -40,7 +40,7 @@ int	debug(t_coder *coder)
 {
 	int	result;
 
-    print_state(coder, "debug");
+    print_state(coder, "is debugging");
     smart_sleep(coder, coder->config->time_to_debug);
 	result = check_sim_state(coder);
 	if (result)
@@ -52,7 +52,7 @@ int	refactor(t_coder *coder)
 {
 	int	result;
     
-    print_state(coder, "refactor");
+    print_state(coder, "is refactoring");
 	smart_sleep(coder, coder->config->time_to_refactor);
 	result = check_sim_state(coder);
 	if (result)
