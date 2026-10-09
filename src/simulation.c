@@ -15,26 +15,20 @@
 void	*routine(void *uncasted_coder)
 {
 	t_coder	*coder;
-	int		compiles_required;
 
 	coder = (t_coder *)uncasted_coder;
-	compiles_required = coder->compiles_left;
 	if (coder->config->number_of_coders == 1)
 	{
-		pthread_mutex_lock(&coder->left->mutex);
-		printf("dongle acquired\n");
-		printf("then you kys\n");
-		smart_sleep(coder, coder->time_to_burnout);
-		pthread_mutex_unlock(&coder->left->mutex);
+		print_state(coder, "has taken a dongle");
+		smart_sleep(coder, coder->time_to_burnout + 50);
+		return (NULL);
 	}
-	while (compiles_required)
+	while (check_sim_state(coder))
 	{
-		compile(coder);
+		if (compile(coder) == FAILURE)
+			break ;
 		debug(coder);
 		refactor(coder);
-		compiles_required--;
-		if (!check_sim_state(coder))
-			break ;
 	}
 	return (NULL);
 }
@@ -78,6 +72,8 @@ int	simulate(char **args)
 	pthread_t	monitor_thread;
 
 	init_config(args, &config);
+	if (init_table(&config) == FAILURE)
+		return (FAILURE);
 	config.dongles = init_dongles(&config);
 	config.coders = init_coders(&config, config.dongles);
 	if (config.coders == NULL || config.dongles == NULL)

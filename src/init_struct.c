@@ -76,8 +76,6 @@ t_dongle	*init_dongles(t_config *config)
 	{
 		if (pthread_mutex_init(&dongles[i].mutex, NULL))
 			return (NULL);
-		if (pthread_cond_init(&dongles[i].dongle_cond, NULL))
-			return (NULL);
 		dongles[i].state = FREE;
 		dongles[i].released_at = 0;
 		dongles[i].cooldown = config->dongle_cooldown;
@@ -87,4 +85,13 @@ t_dongle	*init_dongles(t_config *config)
 		i++;
 	}
 	return (dongles);
+}
+
+int	init_table(t_config *config)
+{
+	if (pthread_mutex_init(&config->table_mutex, NULL))
+		return (FAILURE);
+	if (pthread_cond_init(&config->table_cond, NULL))
+		return (FAILURE);
+	return (SUCCESS);
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   compile.c                                          :+:      :+:    :+:   */
+/*   release.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nalayyou <nalayyou@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,22 +12,24 @@
 
 #include "codexion.h"
 
-static void	do_compile(t_coder *coder)
+static void	release_one(t_dongle *dongle)
 {
-	print_state(coder, "has taken a dongle");
-	print_state(coder, "has taken a dongle");
-	print_state(coder, "is compiling");
-	smart_sleep(coder, coder->config->time_to_compile);
-	release_dongles(coder);
-	pthread_mutex_lock(&coder->config->simulation_mutex);
-	coder->compiles_left--;
-	pthread_mutex_unlock(&coder->config->simulation_mutex);
+	pthread_mutex_lock(&dongle->mutex);
+	dongle->state = FREE;
+	dongle->released_at = get_time_ms();
+	pthread_mutex_unlock(&dongle->mutex);
 }
 
-int	compile(t_coder *coder)
+void	wake_all_waiters(t_config *config)
 {
-	if (acquire_dongles(coder) == FAILURE)
-		return (FAILURE);
-	do_compile(coder);
-	return (SUCCESS);
+	pthread_mutex_lock(&config->table_mutex);
+	pthread_cond_broadcast(&config->table_cond);
+	pthread_mutex_unlock(&config->table_mutex);
+}
+
+void	release_dongles(t_coder *coder)
+{
+	release_one(coder->left);
+	release_one(coder->right);
+	wake_all_waiters(coder->config);
 }

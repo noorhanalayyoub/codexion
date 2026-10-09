@@ -20,7 +20,6 @@ void	cleanup_dongles(t_dongle *dongles, int number)
 	while (index < number)
 	{
 		free_pq(dongles[index].waiters);
-		pthread_cond_destroy(&dongles[index].dongle_cond);
 		pthread_mutex_destroy(&dongles[index].mutex);
 		index++;
 	}
@@ -31,6 +30,8 @@ void	cleanup(t_config *config)
 	free(config->coders);
 	cleanup_dongles(config->dongles, config->number_of_coders);
 	free(config->dongles);
+	pthread_cond_destroy(&config->table_cond);
+	pthread_mutex_destroy(&config->table_mutex);
 	pthread_mutex_destroy(&config->print_mutex);
 	pthread_mutex_destroy(&config->simulation_mutex);
 }

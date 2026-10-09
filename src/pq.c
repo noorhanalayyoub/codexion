@@ -29,7 +29,7 @@ t_pq	*init_pq(size_t capacity)
 	}
 	pq->capacity = capacity;
 	pq->count = 0;
-	pq->ticket = 0;
+	pq->ticket = 1;
 	return (pq);
 }
 
@@ -52,7 +52,7 @@ bool	pq_insert(t_pq *pq, int value, size_t priority)
 	pq->heap[pq->count].priority = priority;
 	pq->heap[pq->count].ticket_id = pq->ticket++;
 	pq->count++;
-	pq_sift_up(pq);
+	pq_sift_up(pq, pq->count - 1);
 	return (true);
 }
 
@@ -65,4 +65,22 @@ bool	pq_pop(t_pq *pq, int *id)
 	pq->heap[0] = pq->heap[pq->count];
 	pq_sift_down(pq);
 	return (true);
+}
+
+bool	pq_remove(t_pq *pq, int value)
+{
+	size_t	i;
+	int		popped;
+
+	if (!pq)
+		return (false);
+	i = 0;
+	while (i < pq->count && pq->heap[i].value != value)
+		i++;
+	if (i == pq->count)
+		return (false);
+	pq->heap[i].priority = 0;
+	pq->heap[i].ticket_id = 0;
+	pq_sift_up(pq, i);
+	return (pq_pop(pq, &popped));
 }
