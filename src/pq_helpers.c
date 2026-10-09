@@ -30,7 +30,7 @@ static void	pq_swap(t_node *a, t_node *b)
 	*b = temp;
 }
 
-void	pq_sift_up(t_pq *pq)
+void	pq_sift_up(t_pq *pq, size_t index)
 {
 	size_t	child_index;
 	size_t	parent_index;
@@ -39,7 +39,7 @@ void	pq_sift_up(t_pq *pq)
 
 	if (!pq)
 		return ;
-	child_index = pq->count - 1;
+	child_index = index;
 	while (child_index > 0)
 	{
 		parent_index = (child_index - 1) / 2;

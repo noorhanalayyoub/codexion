@@ -12,18 +12,27 @@
 
 #include "codexion.h"
 
+static void	announce_burnout(t_config *config, int i)
+{
+	pthread_mutex_lock(&config->print_mutex);
+	printf("%lld %d burned out\n",
+		get_time_ms() - config->start_of_simulation, i + 1);
+	pthread_mutex_unlock(&config->print_mutex);
+}
+
 static int	check_coder(t_config *config, int i, int *all_compiled)
 {
 	pthread_mutex_lock(&config->simulation_mutex);
 	if (config->time_to_burnout <= get_time_ms()
 		- config->coders[i].time_of_last_compile)
 	{
-		printf("coder %d burned out\n", i + 1);
 		config->state_of_sim = 0;
 		pthread_mutex_unlock(&config->simulation_mutex);
+		announce_burnout(config, i);
+		wake_all_waiters(config);
 		return (1);
 	}
-	if (config->coders[i].compiles_left)
+	if (config->coders[i].compiles_left > 0)
 		*all_compiled = 0;
 	pthread_mutex_unlock(&config->simulation_mutex);
 	return (0);
@@ -49,6 +58,7 @@ static void	end_simulation(t_config *config)
 	pthread_mutex_lock(&config->simulation_mutex);
 	config->state_of_sim = 0;
 	pthread_mutex_unlock(&config->simulation_mutex);
+	wake_all_waiters(config);
 }
 
 void	*monitor(void *uncasted_config)

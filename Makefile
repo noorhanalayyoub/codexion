@@ -14,7 +14,16 @@ SRC = src/check_sim_status.c \
 	  src/simulation.c \
 	  src/pq.c \
 	  src/pq_helpers.c \
-	  src/server.c
+	  src/server.c \
+	  src/refactor.c \
+	  src/debug.c \
+	  src/pq_checks.c \
+	  src/compile.c \
+	  src/cleanup.c \
+	  src/acquire.c \
+	  src/release.c \
+	  src/wait.c \
+
 
 OBJS = $(SRC:.c=.o) # take all .c files in src and change their extension to .o
 

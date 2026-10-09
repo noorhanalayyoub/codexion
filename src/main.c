@@ -32,6 +32,11 @@ static int	check_args(char **argv)
 		fprintf(stderr, "number of coders cant be zero\n");
 		return (1);
 	}
+	if (atoi(argv[6]) == 0)
+	{
+		fprintf(stderr, "number of compiles cant be zero\n");
+		return (1);
+	}
 	return (0);
 }
 
